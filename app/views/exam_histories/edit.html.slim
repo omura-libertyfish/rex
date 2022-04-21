@@ -1,0 +1,26 @@
+= form_for(@exam_history) do |f|
+  .table
+    .table-row.header
+      .table-cell.exam-no
+        | #
+      .table-cell.question-long
+        | 問題文
+      .table-cell.answered
+        | 未回答
+      .table-cell
+        | あとで見直す
+
+    - @exam_history.user_answers.each do |user_answers|
+      = link_to edit_exam_history_user_answer_path(exam_history_id: @exam_history.id, uuid: user_answers.url_uuid), class: "no-deco table-row body" do
+        .table-cell
+          = user_answers.exam_no
+        .table-cell
+          = user_answers.question.truncate(60)
+        .table-cell
+          - if user_answers.answered?
+            span.glyphicon.glyphicon-alert
+        .table-cell
+          - if user_answers.review_later
+            span.glyphicon.glyphicon-flag 
+
+  = f.submit "採点する", class: "btn btn-w-md btn-gap-v btn-default"

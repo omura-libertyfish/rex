@@ -1,0 +1,50 @@
+doctype html
+html
+  head
+    meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=0.5,user-scalable=yes,initial-scale=1.0"
+    title
+      | REx - Ruby Examination
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+    = favicon_link_tag
+  body
+    .container
+      .row
+        .col-lg-4.col-md-4
+          .panel.mini-box.row
+            .col-sm-3.col-xs-2
+            .col-md-12.col-sm-2.col-xs-3
+              - if @exam_history.gold?
+                = image_tag 'ruby-gold.png', class: ["center-image", "gem-image"]
+              - else
+                = image_tag 'ruby-silver.png', class: ["center-image", "gem-image"]
+            .col-md-12.col-sm-4.col-xs-5.text-center.box-info
+              span.size-large
+                = @user_answer.exam_no
+                span.size-h2
+                  | /50問
+              p.size-h3
+                - if @user_answer.correct?
+                  = content_tag(:span, class: "user-answer-ok")
+                    | 正解
+                - else
+                  = content_tag(:span, class: "user-answer-ng")
+                    | 不正解
+            .col-sm-3.col-xs-2
+          = link_to exam_history_path(@exam_history), class: "no-deco"
+            .panel.link-box.text-center.size-h4
+              | 問題一覧
+        .col-lg-8.col-md-8
+          = yield
+    footer
+      .container
+        .row
+          .col-lg-12
+            ul.list-inline
+              li
+                a href="https://www.libertyfish.co.jp/"  About
+              li.footer-menu-divider &sdot;
+              li
+                = link_to "Sign out", signout_path
+            = render 'layouts/copyright'

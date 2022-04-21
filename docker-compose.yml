@@ -1,0 +1,21 @@
+version: '2'
+services:
+  app:
+    build: .
+    command: /bin/sh -c "rm -f ./tmp/pids/server.pid && rails s -p 3000 -b '0.0.0.0'"
+    env_file:
+      - ./apikey.env
+    environment:
+      RAILS_ENV: development
+    ports:
+      - '1234:1234'
+      - '3000:3000'
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/ruby-license
+      - bundle:/usr/local/bundle
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa
+
+volumes:
+  bundle:

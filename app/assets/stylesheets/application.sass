@@ -1,0 +1,103 @@
+@import "font-awesome/font-awesome"
+@import "flatify/bootstrap"
+@import "flatify/main"
+@import "flatify/ui"
+@import "rouge/rouge"
+
+body
+  padding-top: 20px
+
+.center-pagination
+  text-align: center
+  min-height: 30px
+
+.center-image
+  display: block
+  margin-left: auto
+  margin-right: auto
+
+.ruby-margin
+  margin-left:  10px
+  margin-right: 10px
+
+.size-large
+  font-size: 56px
+
+.table
+  display: table
+
+.table-row
+  display: table-row
+  &.header
+    font-weight: bold
+  &.body
+    &:hover
+      background-color: #f5f5f5
+
+.link-box
+  padding: 15px
+
+a.no-deco
+  cursor: pointer
+  text-decoration: none
+  color: #767676
+
+.table-cell
+  display: table-cell
+  border-bottom: 1px solid #f3f3f3
+  padding: 10px 5px
+  &.exam-no
+    width: 50px
+  &.question-long
+    width: 580px
+  &.question-short
+    width: 480px
+
+.user-answer-ok
+  color: green
+
+.user-answer-ng
+  color: red
+
+.line-caption
+  margin: 1em 0
+  display: block
+  font-size: .875em
+  font-weight: bold
+  margin-bottom: 1em
+  position: relative
+  text-align: center
+  width: 100%
+  z-index: 1
+
+  &:before
+    width: 150px
+    height: 10px
+    background-color: white
+    content: ''
+    margin: -5px 0 0 -70px
+    left: 50%
+    position: absolute
+    top: 50%
+    z-index: -1
+
+  &:after
+    width: 100%
+    border-bottom: 1px solid darken($body-bg, 10%)
+    content: ''
+    display: block
+    position: absolute
+    top: 49%
+    z-index: -2
+
+.landing-font
+  font-weight: 700
+  font-size: 14px
+
+.marathon-image
+  height: 60px
+  width: 60px
+
+.gem-image
+  height: 80px
+  width: 80px

@@ -1,0 +1,37 @@
+- if @user_answer.prev_url_uuid
+  = link_to '前の問題へ', exam_history_user_answer_path(uuid: @user_answer.prev_url_uuid), class: "btn btn-w-md btn-gap-v btn-default pull-left"
+
+- if @user_answer.next_url_uuid
+  = link_to '次の問題へ', exam_history_user_answer_path(uuid: @user_answer.next_url_uuid), class: "btn btn-w-md btn-gap-v btn-default pull-right"
+
+.clearfix
+
+span.line-caption
+  h4
+    | 解説
+
+= markdown(@user_answer.description)
+
+span.line-caption
+  h4
+    | 問題
+
+= markdown(@user_answer.question)
+
+- @user_answer.option_masters.each_with_index do |master_option, index|
+  .panel.panel-default.ui-ribbon-container.ui-ribbon-primary
+    .ui-ribbon-wrapper style="#{ @user_answer.try("answer_#{index + 1}_id") ? 'display:block' : 'display:none' }"
+      .ui-ribbon
+        | 選択
+    .panel-heading
+      | 選択肢
+    .panel-body
+      = markdown(master_option.sentence)
+
+.clearfix
+
+- if @user_answer.prev_url_uuid
+  = link_to '前の問題へ', exam_history_user_answer_path(uuid: @user_answer.prev_url_uuid), class: "btn btn-w-md btn-gap-v btn-default pull-left"
+
+- if @user_answer.next_url_uuid
+  = link_to '次の問題へ', exam_history_user_answer_path(uuid: @user_answer.next_url_uuid), class: "btn btn-w-md btn-gap-v btn-default pull-right"

@@ -1,0 +1,67 @@
+.row
+  .col-md-12
+    ul.nav.nav-boxed.nav-justified
+      li
+        a.create-exam href="javascript:;" data-exam-type="gold"
+          = image_tag 'ruby-gold.png', size: "60x60", class: "center-image"
+          p.text-muted Goldチャレンジ
+          p.text-muted
+            | 最高得点：
+            = current_user.best_gold_score
+            | 点
+      li
+        a.create-exam href="javascript:;" data-exam-type="silver"
+          = image_tag 'ruby-silver.png', size: "60x60", class: "center-image"
+          p.text-muted Silverチャレンジ
+          p.text-muted
+            | 最高得点：
+            = current_user.best_silver_score
+            | 点
+      li
+        a.create-exam href="javascript:;" data-exam-type="marathon"
+          = image_tag 'marathon.png', size: "60x60", class: "center-image"
+          p.text-muted 学習マラソン
+          p.text-muted
+            | 到達問題：
+            = current_user.continuous_times
+            | 問
+
+div.panel-body
+  - if flash[:info].present?
+    .alert.alert-info role="alert"
+      = flash[:info]
+  - if flash[:error].present?
+    .alert.alert-danger role="alert"
+      = flash[:error]
+
+.row.text-center
+  - @exam_histories.each do |exam_history|
+    .col-sm-6
+      .panel.mini-box
+        - if exam_history.gold?
+          = image_tag 'ruby-gold.png', size: "60x60"
+        - elsif exam_history.silver?
+          = image_tag 'ruby-silver.png', size: "60x60"
+        .box-info
+          span.size-h6
+            | 試験日:
+            = exam_history.created_at.to_s(:exam_date)
+          p.size-h2.no-margin
+            = exam_history.score
+            span.size-h3
+              | /100点
+          span.text-muted
+            ul.list-inline
+              li
+                a href="javascript:;" class="no-deco retry" data-history-id="#{exam_history.id}"
+                  | もう一度やる
+              li &sdot;
+              - if exam_history.pending?
+                li
+                  = link_to "続きからやる", edit_exam_history_path(exam_history), class: "no-deco"
+              - else
+                li
+                  = link_to "解説を見る", exam_history_path(exam_history), class: "no-deco"
+
+.row.center-pagination
+  = paginate @exam_histories

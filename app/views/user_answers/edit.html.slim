@@ -1,0 +1,41 @@
+- if @user_answer.prev_url_uuid
+  = link_to '前の問題へ', edit_exam_history_user_answer_path(uuid: @user_answer.prev_url_uuid), class: "btn btn-w-md btn-gap-v btn-default pull-left"
+
+- if @user_answer.next_url_uuid
+  = link_to '次の問題へ', edit_exam_history_user_answer_path(uuid: @user_answer.next_url_uuid), class: "btn btn-w-md btn-gap-v btn-default pull-right"
+
+.clearfix
+
+span.line-caption
+  h4
+    | 問題
+
+= markdown(@user_answer.question)
+
+= form_for([@exam_history, @user_answer.becomes(UserAnswer)]) do |f|
+  - @user_answer.option_masters.each_with_index do |master_option, index|
+    .panel.panel-default.ui-ribbon-container.ui-ribbon-primary.option data-option-id="#{master_option.id}"
+      .ui-ribbon-wrapper style="#{ f.object.try("answer_#{index + 1}_id") ? 'display:block' : 'display:none' }"
+        .ui-ribbon
+          | 選択
+      .panel-heading
+        | 選択肢
+      .panel-body
+        = markdown(master_option.sentence)
+
+      = f.hidden_field "answer_#{index + 1}_id", value: f.object.try("answer_#{index + 1}_id")
+
+  .checkbox
+    label
+      = f.check_box :review_later
+      | あとで見直す
+
+  = f.submit "解答する", class: "btn btn-w-md btn-gap-v btn-default pull-right"
+
+.clearfix
+
+- if @user_answer.prev_url_uuid
+  = link_to '前の問題へ', edit_exam_history_user_answer_path(uuid: @user_answer.prev_url_uuid), class: "btn btn-w-md btn-gap-v btn-default pull-left"
+
+- if @user_answer.next_url_uuid
+  = link_to '次の問題へ', edit_exam_history_user_answer_path(uuid: @user_answer.next_url_uuid), class: "btn btn-w-md btn-gap-v btn-default pull-right"

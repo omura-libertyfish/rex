@@ -1,0 +1,20 @@
+span.line-caption
+  h4
+    | 問題
+
+= markdown(@user_answer.question)
+
+= form_for([@exam_history, @user_answer.becomes(UserAnswer)], url: marathon_marathon_answer_path(@exam_history, @user_answer.becomes(UserAnswer))) do |f|
+  - @user_answer.option_masters.each_with_index do |master_option, index|
+    .panel.panel-default.ui-ribbon-container.ui-ribbon-primary.option data-option-id="#{master_option.id}"
+      .ui-ribbon-wrapper style="#{ f.object.try("answer_#{index + 1}_id") ? 'display:block' : 'display:none' }"
+        .ui-ribbon
+          | 選択
+      .panel-heading
+        | 選択肢
+      .panel-body
+        = markdown(master_option.sentence)
+
+      = f.hidden_field "answer_#{index + 1}_id", value: f.object.try("answer_#{index + 1}_id")
+
+  = f.submit "解答する", class: "btn btn-w-md btn-gap-v btn-default pull-right"

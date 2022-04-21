@@ -1,0 +1,21 @@
+.table
+  .table-row.header
+    .table-cell.exam-no
+      | #
+    .table-cell.question-short
+      | 問題文
+    .table-cell
+      | あなたの選択
+    .table-cell
+      | 点数
+
+  - @exam_history.user_answers.each do |user_answer|
+    = link_to exam_history_user_answer_path(exam_history_id: @exam_history.id, uuid: user_answer.url_uuid), class: "no-deco table-row body" do
+      .table-cell
+        = user_answer.exam_no
+      .table-cell
+        = user_answer.question.truncate(25)
+      .table-cell
+        = user_answer.answer_id_indexes.join(",")
+      .table-cell
+        = user_answer.score
